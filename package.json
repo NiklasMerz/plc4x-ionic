@@ -68,7 +68,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-plc4x": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
@@ -100,7 +99,8 @@
         "DEEPLINK_4_HOST": " ",
         "DEEPLINK_5_SCHEME": " ",
         "DEEPLINK_5_HOST": " "
-      }
+      },
+      "cordova-plugin-plc4x": {}
     },
     "platforms": [
       "android"
