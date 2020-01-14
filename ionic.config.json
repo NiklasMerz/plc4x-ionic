@@ -1,5 +1,7 @@
 {
   "name": "plc4x-ionic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
