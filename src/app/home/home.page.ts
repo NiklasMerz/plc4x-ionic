@@ -18,7 +18,7 @@ export class HomePage {
     { name: 'rand_val', fieldQuery: '%DB444.DBD4:REAL' }
   ];
   pos: PLC4XItem;
-  interval: NodeJS.Timer;
+  interval: any;
 
   constructor(private toastCtrl: ToastController, private alertCtrl: AlertController) {}
 
@@ -55,7 +55,9 @@ export class HomePage {
   }
 
   ionViewDidLeave() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
 }
