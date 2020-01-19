@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-card class="welcome-card">
-    <img src="/assets/shapes.svg" alt=""/>
+    <img src="/assets/apache_plc4x_logo.png" alt=""/>
     <ion-card-header>
       <ion-card-subtitle>Get Started</ion-card-subtitle>
       <ion-card-title>Welcome to PLC4X</ion-card-title>
@@ -22,13 +22,28 @@
         <ion-input placeholder="s7://10.10.64.20/1/1" [(ngModel)]="url"></ion-input>
       </ion-item>
       <ion-button (click)="connect()">Connect</ion-button>
+      <ion-button color="secondary" (click)="read()">Read</ion-button>
     </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="pos">
+    <ion-card-title>
+      Position
+    </ion-card-title>
+    <ion-item>
+      <ion-range min="0" max="5000" color="primary" [value]="pos.value">
+        <ion-label slot="start">0</ion-label>
+        <ion-label slot="end">5000</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{pos.value}}</ion-label>
+    </ion-item>
   </ion-card>
 
   <ion-list lines="none">
     <ion-list-header>
       <ion-label>Values</ion-label>
-      <ion-button fill="outline" (click)="read()">Read</ion-button>
     </ion-list-header>
     <ion-item *ngFor="let value of values">
       <ion-label>{{value.name}}</ion-label>

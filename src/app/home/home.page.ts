@@ -3,6 +3,8 @@ import { ToastController, AlertController } from '@ionic/angular';
 
 declare var PLC4X: any;
 
+interface PLC4XItem {name: string; fieldQuery: string; value?: any; }
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -10,9 +12,13 @@ declare var PLC4X: any;
 })
 export class HomePage {
   url = 's7://192.168.167.210/1/1';
-  values: Array<{name: string, fieldQuery: string, value?: any}> = [
-    { name: 'item1', fieldQuery: '%DB555.DBD0:DINT' }, { name: 'item2', fieldQuery: '%DB555.DBD0:DINT' }
+  values: Array<PLC4XItem> = [
+    { name: 'motor-current', fieldQuery: '%DB444.DBD8:REAL' },
+    { name: 'position', fieldQuery: '%DB444.DBD0:REAL' },
+    { name: 'rand_val', fieldQuery: '%DB444.DBD4:REAL' }
   ];
+  pos: PLC4XItem;
+  interval: NodeJS.Timer;
 
   constructor(private toastCtrl: ToastController, private alertCtrl: AlertController) {}
 
@@ -34,13 +40,22 @@ export class HomePage {
   }
 
   read() {
-    PLC4X.read(this.values, (res) => this.values = res, async (err) => {
-      const alert = await this.alertCtrl.create({
-        buttons: ['OK'],
-        message: err
+    this.interval = setInterval(() => {
+      PLC4X.read(this.values, (res) => {
+        this.values = res;
+        this.pos = this.values.find(elem => elem.name === 'position');
+      }, async (err) => {
+        const alert = await this.alertCtrl.create({
+          buttons: ['OK'],
+          message: err
+        });
+        alert.present();
       });
-      alert.present();
-    });
+    }, 1000);
+  }
+
+  ionViewDidLeave() {
+    clearInterval(this.interval);
   }
 
 }
